@@ -27,7 +27,7 @@ local function Unequip()
     Client.Character.Humanoid:UnequipTools()
 end
 
-local function walkTo(destination, value)
+local function walkTo(destination: Vector3, value: boolean)
     local character = Client.Character or Client.CharacterAdded:Wait()
     local humanoid = character:WaitForChild("Humanoid")
     local rootPart = character:WaitForChild("HumanoidRootPart")
@@ -41,8 +41,6 @@ local function walkTo(destination, value)
     local success = pcall(function()
         path:ComputeAsync(rootPart.Position, destination)
     end)
-end
-
 
     if success and path.Status == Enum.PathStatus.Success then
         if value then
@@ -60,7 +58,7 @@ end
                 humanoid:MoveTo(wp.Position)
 
                 if wp.Action == Enum.PathWaypointAction.Jump then
-                    Client.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+                    humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
                 end
 
                 repeat task.wait() until finished or _G["StopWalking"]
@@ -70,17 +68,19 @@ end
     else
         warn("Pathfinding failed:", path.Status)
     end
-end
+end -- ✅ fecha só a função aqui, sem `end` a mais
 
+-- ✅ agora sim começa o bloco do rod
 if game.workspace.PlayerStats[Client.Name].T[Client.Name] then
     local rod = game.workspace.PlayerStats[Client.Name].T[Client.Name].Stats.rod
     if rod then
         Rod = rod.Value
         rod.Changed:Connect(function(newValue)
-            Rod = newValue 
+            Rod = newValue
         end)
     end
 end
+
 
 local d = {}
 local st = {}
