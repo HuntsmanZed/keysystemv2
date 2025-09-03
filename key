@@ -27,7 +27,7 @@ local function Unequip()
     Client.Character.Humanoid:UnequipTools()
 end
 
-local function walkTo(destination: Vector3, value: boolean)
+local function walkTo(destination, value)
     local character = Client.Character or Client.CharacterAdded:Wait()
     local humanoid = character:WaitForChild("Humanoid")
     local rootPart = character:WaitForChild("HumanoidRootPart")
